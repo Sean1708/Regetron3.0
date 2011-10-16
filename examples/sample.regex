@@ -1,0 +1,6 @@
+(?i) # set to case insensitive
+^ # starts with
+.* # any number of chars
+(zed|software) # zed or software
+.* # any chars
+$ # to the end

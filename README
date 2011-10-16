@@ -1,0 +1,171 @@
+                    _____
+                ___/  |  \___
+             __/      |      \__
+          __/         |         \__
+         /|           |           |\
+        | |           |           | |
+        | |           |           | |
+       |  |           |           |  |
+       |  |        ___|___        |  |
+      /   |    ___/  ___  \___    |   \
+      |   |___/  ___/| |\___  \___|   |
+      |   /   __/_ \_| |_/ _\__   \   |
+     |   |___/\_  \_______/  _/\___|   |
+    /   /___/   \___\___/___/   \___\   \
+   /    |   |       |   |       |   |    \
+  /     |   |_      |   |      _|   |     \
+ |___   |___|_\   _/|___|\_   /_|___|   ___|
+ |_  \    |   |\ /  |___|  \ /|   |    /  _|
+ ||| |    |   | |  _______  | |   |    | |||
+ ||| |    |   | |  \_____/  | |   |    | |||
+ ||| |    |   | |    ___    | |   |    | |||
+ ||| |    |   | |           | |   |    | |||
+ ||| |    |   | |           | |   |    | |||
+ ||| |    |   | |           | |   |    | |||
+ ||| |    |   |\|           |/|   |    | |||
+ \||_|____|___|-\___________/-|___|____|_||/
+
+
+Regetron The Regex Teaching Shell
+=================================
+
+Regetron is a simple shell for learning to use regular expressions.
+It simply loads files you tell it to, then gives you a prompt for
+entering regex and having it print the lines.  It's designed to
+work with the book I'm making named "Learn Regex The Hard Way"
+that I'm about to start working on.
+
+Installation
+============
+
+It's in PyPI as regetron so just do:
+
+  pip install regetron
+
+Or, if you don't like that do:
+
+  easy_install regetron
+
+Or, if you don't like that, then check out the git repo at:
+
+  https://gitorious.org/regetron/regetron
+
+And figure it out for yourself.
+
+Usage
+=====
+
+After that just run regetron like this:
+
+  $ regetron 
+  Regetron! The regex teaching shell.
+  Type your regex at the prompt and hit enter. It'll show you the
+  lines that match that regex, or nothing if nothing matches.
+  Hit CTRL-d to quit (CTRL-z on windows).
+  > 
+
+Setting Data To Work On
+=======================
+
+At this point you can use some commands to setup some data
+and then type regex to see how they work.  Try this:
+
+  > !data "This is some stuff\nAnd some more stuff\n"
+  > This
+  0000: This is some stuff
+  > stuff
+  0000: This is some stuff
+  0001: And some more stuff
+  >
+
+Commands start with ! and are one word then some args.  The !data
+command takes any python expression, evals it, then cuts it up
+with split.  Basically you can enter in your own python example
+to try regex against.
+
+Loading Files
+=============
+
+If you want to load a file, it's !load or pass the file on the
+command line:
+
+  > !load LICENSE
+  > Zed
+  0000: Copyright (c) 2011, Zed A. Shaw
+  0013: * Neither the name of the Zed A. Shaw, "Learn Regex The Hard Way", nor the
+  > 
+
+That's me loading the LICENSE file for regetron.  You can also do that with:
+
+  regetron LICENSE
+
+Matching Vs. Searching Toggle
+=============================
+
+There's one more command !match which switches regetron from searching
+for the regex in the lines to matching the line exactly:
+
+  > !match
+  Match mode: match
+  > Zed
+  > .*Zed.*
+  0000: Copyright (c) 2011, Zed A. Shaw
+  0013: * Neither the name of the Zed A. Shaw, "Learn Regex The Hard Way", nor the
+  >
+
+It works like a toggle so do it again and it goes back to search mode.
+
+Multiline Regex For Commenting
+==============================
+
+You can enter multi-line commented regex.  Just hit enter once,
+then start typing, and end it with an empty line:
+
+  > 
+  (?i) # set to case insensitive
+  ^ # starts with
+  .* # any number of chars
+  (zed|software) # zed or software
+  .* # any chars
+  $ # to the end
+  
+  0000: Copyright (c) 2011, Zed A. Shaw
+  0013: * Neither the name of the Zed A. Shaw, "Learn Regex The Hard Way", nor the
+  0015:   derived from this software without specific prior written permission.
+  0017: THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  0026: OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  >
+
+Loading Regex From Files
+========================
+
+Finally, you can load multi-line regex from files you have saved using the
+!parse command:
+
+  > !parse example/sample.regex
+  0000: Copyright (c) 2011, Zed A. Shaw
+  0013: * Neither the name of the Zed A. Shaw, "Learn Regex The Hard Way", nor the
+  0015:   derived from this software without specific prior written permission.
+  0017: THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  0026: OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Scrollback And Editing
+======================
+
+If you have readline support then you can get a full scrollback, history,
+and can edit lines.
+
+
+Quitting
+========
+
+You can quit regetron by hitting CTRL-d (or CTRL-Z on windows).
+
+
+Getting Help
+============
+
+If you are stuck on regetron then email help@learncodethehardway.org and
+I'll help.  You can also fork the git repo and submit merge requests.
+

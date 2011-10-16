@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+
+import re
+import sys
+import cmd
+import os
+from regetron.engine import Regetron
+
+shell = Regetron()
+shell.setup_readline()
+
+if len(sys.argv) == 2:
+    shell.load_input_file(sys.argv[1])
+
+print """Regetron! The regex teaching shell.
+Type your regex at the prompt and hit enter. It'll show you the
+lines that match that regex, or nothing if nothing matches.
+Hit CTRL-d to quit (CTRL-z on windows)."""
+
+shell.run_input_loop()
+
