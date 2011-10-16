@@ -115,10 +115,10 @@ for the regex in the lines to matching the line exactly:
 
 It works like a toggle so do it again and it goes back to search mode.
 
-Multiline Regex For Commenting
+Verbose Regex For Commenting
 ==============================
 
-You can enter multi-line commented regex.  Just hit enter once,
+You can enter verbose commented regex.  Just hit enter once,
 then start typing, and end it with an empty line:
 
   > 
@@ -139,7 +139,7 @@ then start typing, and end it with an empty line:
 Loading Regex From Files
 ========================
 
-Finally, you can load multi-line regex from files you have saved using the
+Finally, you can load verbose regex from files you have saved using the
 !parse command:
 
   > !parse example/sample.regex

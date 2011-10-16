@@ -40,7 +40,7 @@ class Regetron(object):
         self.infile = open(self.infile_name).readlines()
 
 
-    def read_multiline_regex(self):
+    def read_verbose(self):
         exp = []
         l = raw_input()
         while l:
@@ -77,7 +77,7 @@ class Regetron(object):
                 command = CMD_PATTERN.match(exp)
 
                 if exp == "":
-                    return self.read_multiline_regex()
+                    return self.read_verbose()
                 if command:
                     result = self.handle_command(*command.groups())
                     if result: return result
