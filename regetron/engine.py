@@ -102,8 +102,17 @@ class Regetron(object):
                 print "ERROR", e
 
     def replace_regex(self, args):
-        print "ARGS", repr(args)
-
+        bound_char = args[0]
+        pattern = args.split(bound_char)
+        if len(pattern) != 4:
+            print "ERROR, format is: !reg /REGEX/REPLACE/ and / can be any char."
+        else:
+            reg, rep = pattern[1], pattern[2]
+            regex = re.compile(reg)
+            for i, line in enumerate(self.infile):
+                if self.test_regex(regex, line):
+                    print re.sub(regex, rep, line),
+                    
     def test_regex(self, regex, line):
         if self.match_mode:
             return regex.match(line)
