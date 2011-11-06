@@ -11,6 +11,14 @@ class Regetron(object):
         self.infile_name = None
         self.infile = ""
         self.match_mode = False
+        self.from_script = False
+        self.prompt = "> "
+
+    def read_line(self, prompt=""):
+        exp = raw_input(prompt)
+        if self.from_script:
+            print exp
+        return exp
 
     def setup_readline(self):
         try:
@@ -42,10 +50,11 @@ class Regetron(object):
 
     def read_verbose(self):
         exp = []
-        l = raw_input()
+        l = self.read_line()
+
         while l:
             exp.append(l)
-            l = raw_input()
+            l = self.read_line()
 
         return re.compile("\n".join(exp), re.X)
 
@@ -58,7 +67,7 @@ class Regetron(object):
         if command == "load":
             self.load_input_file(args)
         elif command == "help":
-            print "Commands: !load !match !data"
+            print "Commands: !load !match !data !rep"
         elif command == "data":
             self.set_data(args)
         elif command == "parse":
@@ -67,13 +76,16 @@ class Regetron(object):
         elif command == "match":
             self.match_mode = not self.match_mode
             print "Match mode: %s" % (self.match_mode and "match" or "search")
+        elif command == "rep":
+            self.replace_regex(args)
         else:
             print "Invalid command, only !load and !help is available."
 
     def read_input(self):
         while True:
             try:
-                exp = raw_input("> ")
+                exp = self.read_line(self.prompt)
+
                 command = CMD_PATTERN.match(exp)
 
                 if exp == "":
@@ -84,10 +96,13 @@ class Regetron(object):
                 else:
                     return re.compile(exp)
             except EOFError:
-                print "\nBYE"
+                print self.from_script and "\n" or "\nBYE"
                 return False
             except Exception, e:
                 print "ERROR", e
+
+    def replace_regex(self, args):
+        print "ARGS", repr(args)
 
     def test_regex(self, regex, line):
         if self.match_mode:
@@ -109,4 +124,8 @@ class Regetron(object):
         while regex:
             self.print_matches(regex)
             regex = self.read_input()
+
+    def load_script(self, fname):
+        sys.stdin = open(fname)
+        self.from_script = True
 

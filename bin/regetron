@@ -6,16 +6,22 @@ import cmd
 import os
 from regetron.engine import Regetron
 
-shell = Regetron()
-shell.setup_readline()
+SHELL = Regetron()
 
-if len(sys.argv) == 2:
-    shell.load_input_file(sys.argv[1])
-
-print """Regetron! The regex teaching shell.
+WELCOME = """Regetron! The regex teaching SHELL.
 Type your regex at the prompt and hit enter. It'll show you the
 lines that match that regex, or nothing if nothing matches.
 Hit CTRL-d to quit (CTRL-z on windows)."""
 
-shell.run_input_loop()
+if len(sys.argv) >= 2:
+    SHELL.load_input_file(sys.argv[1])
+
+    if len(sys.argv) == 3:
+        SHELL.load_script(sys.argv[2])
+    else:
+        SHELL.setup_readline()
+        print WELCOME
+
+
+SHELL.run_input_loop()
 

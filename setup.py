@@ -9,7 +9,7 @@ config = {
  'url': 'https://gitorious.org/regetron/regetron',
  'download_url': 'http://pypi.python.org/pypi/regetron',
  'author_email': 'zedshaw@zedshaw.com',
- 'version': '1.1',
+ 'version': '1.2',
  'install_requires': [],
  'packages': ['regetron'],
  'scripts': ['bin/regetron'],
