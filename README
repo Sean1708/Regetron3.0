@@ -139,8 +139,7 @@ then start typing, and end it with an empty line:
 Loading Regex From Files
 ========================
 
-Finally, you can load verbose regex from files you have saved using the
-!parse command:
+You can load verbose regex from files you have saved using the !parse command:
 
   > !parse example/sample.regex
   0000: Copyright (c) 2011, Zed A. Shaw
@@ -149,6 +148,40 @@ Finally, you can load verbose regex from files you have saved using the
   0017: THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
   0026: OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+You can also give a whole "script" of input if you add an extra parameter:
+
+  regetron sample.txt myscript.regex
+
+Which will run the script of regex against the file sample.txt.  Here's
+a test regex that I run against the regetron setup.py:
+
+    [a-z]
+    !load setup.py
+
+    [ # start set
+    a-z # a through z
+    ] # end set
+    edshaw # rest of my name
+
+    !rep /zedshaw/XXXX/
+
+Which is available in the examples directory of the source.
+
+Search Replace
+==============
+
+You can use the !rep command to replace a regex with some text.  You use it
+by giving a sed style search expression:
+
+    !rep /zedshaw/XXX/
+
+And the '/' characters can be any char, so you can also do:
+
+    !rep |http://|XXX|
+
+It does not actually edit any files or the input.  It just prints out
+lines that matched, but with the replace done to them.  This is useful
+for seeing what a regex will do.
 
 Scrollback And Editing
 ======================
