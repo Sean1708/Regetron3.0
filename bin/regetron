@@ -18,9 +18,9 @@ if len(sys.argv) >= 2:
 
     if len(sys.argv) == 3:
         SHELL.load_script(sys.argv[2])
-    else:
-        SHELL.setup_readline()
-        print WELCOME
+else:
+    SHELL.setup_readline()
+    print WELCOME
 
 
 SHELL.run_input_loop()
