@@ -125,8 +125,12 @@ class Regetron(object):
             return
 
         for i, line in enumerate(self.infile):
-            if self.test_regex(regex, line):
-                print "%.4d: %s" % (i, line),
+            res = self.test_regex(regex, line)
+            if res:
+                if res.groups():
+                    print "%.4d: %r" % (i, regex.findall(line))
+                else:
+                    print "%.4d: %s" % (i, line),
 
     def run_input_loop(self):
         regex = self.read_input()
