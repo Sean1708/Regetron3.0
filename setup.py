@@ -1,8 +1,3 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
 config = {
  'description': 'regetron is a simple shell for playing with regular expressions',
  'author': 'Zed A. Shaw',
@@ -12,8 +7,22 @@ config = {
  'version': '1.4',
  'install_requires': [],
  'packages': ['regetron'],
- 'scripts': ['bin/regetron'],
  'name': 'regetron'
 }
+
+try:
+    from setuptools import setup
+
+    config['entry_points'] = {
+            'console_scripts' : [
+                'regetron = regetron.cmdline:main'
+            ],
+    }
+
+except ImportError:
+    from distutils.core import setup
+
+    config['scripts'] = ['bin/regetron', 'bin/regetron.bat']
+
 setup(**config)
 
