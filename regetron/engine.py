@@ -23,21 +23,21 @@ class Regetron(object):
     def setup_readline(self):
         try:
             import readline
+
+            import atexit
+
+            histfile = os.path.join(os.path.expanduser("~"), ".regetronhist")
+
+            try:
+                readline.read_history_file(histfile)
+            except IOError:
+                pass
+
+            atexit.register(readline.write_history_file, histfile)
+
+            readline.parse_and_bind("TAB: complete")
         except:
             print "No readline support, so no scroll back for you."
-
-        import atexit
-
-        histfile = os.path.join(os.path.expanduser("~"), ".regetronhist")
-
-        try:
-            readline.read_history_file(histfile)
-        except IOError:
-            pass
-
-        atexit.register(readline.write_history_file, histfile)
-
-        readline.parse_and_bind("TAB: complete")
 
     def load_input_file(self, infile_name):
         self.infile_name = infile_name
