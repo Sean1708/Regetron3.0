@@ -60,7 +60,7 @@ class Regetron(object):
 
     def set_data(self, args):
         self.infile_name = None
-        data = eval(args).split("\n")
+        data = str(args).split("\n")
         self.infile = [l + "\n" for l in data]
 
     def handle_command(self, command, args):
