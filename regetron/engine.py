@@ -5,6 +5,14 @@ import os
 
 CMD_PATTERN = re.compile("^!([a-z]+)\s*(.*)$")
 
+class ArtificialException(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return repr(self.value)
+
+
 class Regetron(object):
 
     def __init__(self):
@@ -58,9 +66,22 @@ class Regetron(object):
 
         return re.compile("\n".join(exp), re.X)
 
+    def check_and_remove_quotes(self, args):
+        try:
+            if (args[0] == args[-1]) and (args[0] in ["'", '"']):
+                return args[1:-1]
+            else:
+                raise ArtificialException("Quotation marks not found, or do not match.")
+        except ArtificialException as e:
+            print 'Error:', e.value
+
     def set_data(self, args):
         self.infile_name = None
-        data = str(args).split("\\n")
+        args = self.check_and_remove_quotes(args)   # This is to make the program run
+                                                    # the sames way as when we used eval.
+
+        data = str(args).split("\\n")               # Because it's a string (not eval), we have to split
+                                                    # on literal "\n", so we have to escape the "\".
         self.infile = [l + "\n" for l in data]
 
     def handle_command(self, command, args):
