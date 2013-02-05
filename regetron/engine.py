@@ -6,6 +6,7 @@ import os
 CMD_PATTERN = re.compile("^!([a-z]+)\s*(.*)$")
 
 class ArtificialException(Exception):
+
     def __init__(self, value):
         self.value = value
 
@@ -67,13 +68,10 @@ class Regetron(object):
         return re.compile("\n".join(exp), re.X)
 
     def check_and_remove_quotes(self, args):
-        try:
-            if (args[0] == args[-1]) and (args[0] in ["'", '"']):
-                return args[1:-1]
-            else:
-                raise ArtificialException("Quotation marks not found, or do not match.")
-        except ArtificialException as e:
-            print 'Error:', e.value
+        if (args[0] == args[-1]) and (args[0] in ["'", '"']):
+            return args[1:-1]
+        else:
+            raise ArtificialException("Data must be enclosed in matching quotation marks.")
 
     def set_data(self, args):
         self.infile_name = None
