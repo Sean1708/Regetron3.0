@@ -75,7 +75,10 @@ class Regetron(object):
 
     def set_data(self, args):
         self.infile_name = None
-        args = args.strip()
+        args = args.strip()                         # Removes accidental whitespace from
+                                                    # closing quotation mark. (makes the 
+                                                    # program slightly more user friendly)
+
         args = self.check_and_remove_quotes(args)   # This is to make the program run
                                                     # the sames way as when we used eval.
 
