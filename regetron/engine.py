@@ -14,7 +14,7 @@ class ArtificialException(Exception):
         return repr(self.value)
 
 
-class Regetron(object):
+class Regetron:
 
     def __init__(self):
         self.infile_name = None
@@ -26,13 +26,12 @@ class Regetron(object):
     def read_line(self, prompt=""):
         exp = raw_input(prompt)
         if self.from_script:
-            print exp
+            print(exp)
         return exp
 
     def setup_readline(self):
         try:
             import readline
-
             import atexit
 
             histfile = os.path.join(os.path.expanduser("~"), ".regetronhist")
@@ -46,12 +45,12 @@ class Regetron(object):
 
             readline.parse_and_bind("TAB: complete")
         except:
-            print "No readline support, so no scroll back for you."
+            print("No readline support, so no scroll back for you.")
 
     def load_input_file(self, infile_name):
         self.infile_name = infile_name
         if not os.path.exists(self.infile_name):
-            print "That file doesn't exist."
+            print("That file doesn't exist.")
             return
 
         self.infile = open(self.infile_name).readlines()
@@ -90,7 +89,7 @@ class Regetron(object):
         if command == "load":
             self.load_input_file(args)
         elif command == "help":
-            print "Commands: !load !match !data !rep"
+            print("Commands: !load !match !data !rep")
         elif command == "data":
             self.set_data(args)
         elif command == "parse":
@@ -98,11 +97,11 @@ class Regetron(object):
             return re.compile(sample, re.X)
         elif command == "match":
             self.match_mode = not self.match_mode
-            print "Match mode: %s" % (self.match_mode and "match" or "search")
+            print("Match mode: {0}".format("match" if self.match_mode else "search"))
         elif command == "rep":
             self.replace_regex(args)
         else:
-            print "Invalid command, only !load and !help is available."
+            print("Invalid command, only !load and !help is available.")
 
     def read_input(self):
         while True:
@@ -119,16 +118,16 @@ class Regetron(object):
                 else:
                     return re.compile(exp)
             except EOFError:
-                print self.from_script and "\n" or "\nBYE"
+                print("\n" if self.from_script else "\nBYE")
                 return False
-            except Exception, e:
-                print "ERROR", e
+            except Exception as e:
+                print("ERROR", e)
 
     def replace_regex(self, args):
         bound_char = args[0]
         pattern = args.split(bound_char)
         if len(pattern) != 4:
-            print "ERROR, format is: !reg /REGEX/REPLACE/ and / can be any char."
+            print("ERROR, format is: !reg /REGEX/REPLACE/ and / can be any char.")
         else:
             reg, rep = pattern[1], pattern[2]
             regex = re.compile(reg)
@@ -144,16 +143,16 @@ class Regetron(object):
 
     def print_matches(self, regex):
         if not self.infile:
-            print "Input file is empty. Use !load to load something."
+            print("Input file is empty. Use !load to load something.")
             return
 
         for i, line in enumerate(self.infile):
             res = self.test_regex(regex, line)
             if res:
                 if res.groups():
-                    print "%.4d: %r" % (i, regex.findall(line))
+                    print("{0:04d}: {1!r}".format(i, regex.findall(line)))
                 else:
-                    print "%.4d: %s" % (i, line),
+                    print("{0:04d}: {1!s}".format(i, line), end="")
 
     def run_input_loop(self):
         regex = self.read_input()

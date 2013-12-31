@@ -1,3 +1,5 @@
+THIS IS A FORK OF THE ORIGINAL REGETRON FOR USE WITH PYTHON 3.
+EVERYTHONG SHOULD WORK THE SAME.
                     _____
                 ___/  |  \___
              __/      |      \__
@@ -193,12 +195,4 @@ and can edit lines.
 Quitting
 ========
 
-You can quit regetron by hitting CTRL-d (or CTRL-Z on windows).
-
-
-Getting Help
-============
-
-If you are stuck on regetron then email help@learncodethehardway.org and
-I'll help.  You can also fork the git repo and submit merge requests.
-
+You can quit regetron by hitting CTRL-D (or CTRL-Z on windows).

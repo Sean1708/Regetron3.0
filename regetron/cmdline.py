@@ -10,7 +10,7 @@ def main():
     SHELL = Regetron()
 
     WELCOME = """Regetron! The regex teaching SHELL.
-    Type your regex at the prompt and hit enter. It'll show you the
+    Type your regex at the prompt and hit enter. It"ll show you the
     lines that match that regex, or nothing if nothing matches.
     Hit CTRL-d to quit (CTRL-z on windows)."""
 
@@ -21,11 +21,11 @@ def main():
             SHELL.load_script(sys.argv[2])
     else:
         SHELL.setup_readline()
-        print WELCOME
+        print(WELCOME)
 
 
     SHELL.run_input_loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
