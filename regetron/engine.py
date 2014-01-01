@@ -24,7 +24,7 @@ class Regetron:
         self.prompt = "> "
 
     def read_line(self, prompt=""):
-        exp = raw_input(prompt)
+        exp = input(prompt)
         if self.from_script:
             print(exp)
         return exp
@@ -133,7 +133,7 @@ class Regetron:
             regex = re.compile(reg)
             for i, line in enumerate(self.infile):
                 if self.test_regex(regex, line):
-                    print re.sub(regex, rep, line),
+                    print(re.sub(regex, rep, line), end="")
                     
     def test_regex(self, regex, line):
         if self.match_mode:
