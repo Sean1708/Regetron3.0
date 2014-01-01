@@ -4,7 +4,7 @@ import re
 import sys
 import cmd
 import os
-from engine import Regetron
+from regetron.engine import Regetron
 
 def main():
     SHELL = Regetron()
