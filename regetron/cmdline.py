@@ -18,10 +18,13 @@ Hit CTRL-D to quit (CTRL-Z on windows).
 """
 
     if len(sys.argv) >= 2:
-        SHELL.load_input_file(sys.argv[1])
+        exists = SHELL.load_input_file(sys.argv[1])
 
-        if len(sys.argv) == 3:
-            SHELL.load_script(sys.argv[2])
+        if len(sys.argv) == 3 and exists:
+            try:
+                SHELL.load_script(sys.argv[2])
+            except FileNotFoundError:
+                print("Script {0} doesn't exist.".format(sys.argv[2]))
     else:
         SHELL.setup_readline()
         print(WELCOME)

@@ -50,10 +50,13 @@ class Regetron:
     def load_input_file(self, infile_name):
         self.infile_name = infile_name
         if not os.path.exists(self.infile_name):
-            print("That file doesn't exist.")
-            return
-
-        self.infile = open(self.infile_name).readlines()
+            print("File {0} doesn't exist.".format(self.infile_name))
+            # allows cmdline.py to know if data couldn't be loaded
+            return False
+        else:
+            self.infile = open(self.infile_name).readlines()
+            print("File {0} has been loaded.".format(self.infile_name))
+            return True
 
 
     def read_verbose(self):
@@ -112,7 +115,7 @@ class Regetron:
 
                 if exp == "":
                     return self.read_verbose()
-                if command:
+                elif command:
                     result = self.handle_command(*command.groups())
                     if result: return result
                 else:
