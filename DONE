@@ -1,0 +1,5 @@
+2014-03-14
+==========
+adapted load command to expand tildes
+readline is setup even when loading the script from the terminal
+user can specify a custom prompt

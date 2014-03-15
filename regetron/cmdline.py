@@ -1,10 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import re
 import sys
-import cmd
-import os
 from regetron.engine import Regetron
+
 
 def main():
     SHELL = Regetron()
@@ -26,10 +24,9 @@ Hit CTRL-D to quit (CTRL-Z on windows).
             except FileNotFoundError:
                 print("Script {0} doesn't exist.".format(sys.argv[2]))
     else:
-        SHELL.setup_readline()
         print(WELCOME)
 
-
+    SHELL.setup_readline()
     SHELL.run_input_loop()
 
 
