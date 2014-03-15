@@ -115,17 +115,17 @@ class Regetron:
         return exp
 
     def read_verbose(self):
-        exp = []
+        exp = ""
         l = self.read_line()
         while l:
-            exp.append(l.strip())
+            exp += self.strip_regex(l)
             l = self.read_line()
 
-        # I think that exercise 6 is just invalid regex
-        # but write a small script using verbose to check
-        r = "\n".join(exp)
-        print(repr(r))
-        return re.compile(r, re.X)
+        return re.compile(exp, re.X)
+
+    def strip_regex(self, exp):
+        exp = exp.split('#', 1)[0]
+        return exp.strip()
 
     def handle_command(self, command, args):
         if command == "data":
