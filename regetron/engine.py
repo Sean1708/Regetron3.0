@@ -121,7 +121,7 @@ class Regetron:
             exp += self.strip_regex(l)
             l = self.read_line()
 
-        return re.compile(exp, re.X)
+        return re.compile(exp)
 
     def strip_regex(self, exp):
         exp = exp.split('#', 1)[0]

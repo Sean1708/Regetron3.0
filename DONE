@@ -3,3 +3,7 @@
 adapted load command to expand tildes
 readline is setup even when loading the script from the terminal
 user can specify a custom prompt
+
+2014-03-15
+==========
+verbose now works though I expect it's far from perfect
