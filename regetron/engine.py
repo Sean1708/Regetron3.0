@@ -118,22 +118,10 @@ class Regetron:
         exp = []
         l = self.read_line()
         while l:
-            exp.append(l.strip())
+            exp.append(l)
             l = self.read_line()
 
-<<<<<<< HEAD
-        return re.compile(exp)
-
-    def strip_regex(self, exp):
-        exp = exp.split('#', 1)[0]
-        return exp.strip()
-=======
-        # I think that exercise 6 is just invalid regex
-        # but write a small script using verbose to check
-        r = "\n".join(exp)
-        print(repr(r))
-        return re.compile(r, re.X)
->>>>>>> parent of 8d73084... Fixed read_verbose.
+        return re.compile('\n'.join(exp), re.VERBOSE)
 
     def handle_command(self, command, args):
         if command == "data":
