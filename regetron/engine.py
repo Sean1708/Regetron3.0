@@ -102,7 +102,7 @@ class Regetron:
                 else:
                     return re.compile(exp)
             except EOFError:
-                print("\n" if self.from_script else "\nBYE")
+                print("" if self.from_script else "\nBYE")
                 return False
             except Exception as e:
                 print("ERROR", e)
