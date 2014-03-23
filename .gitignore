@@ -1,2 +1,10 @@
+# Project
 __pycache__
 TODO
+DONE
+
+# Virtual Environment
+Regetron3.0.egg-info/
+.env/
+build/
+dist/
