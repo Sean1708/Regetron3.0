@@ -23,6 +23,53 @@ class Regetron:
         self.from_script = False
         self.prompt = "> "
 
+        self.commands = {
+            "help": ("print a help message for the given command",
+                     """Usage: !help [cmd]
+
+    When called with no arguments this command prints a short description of
+    all available commands. If an argument is supplied a longer description of
+    just that command will be printed."""),
+            "data": ("load a string into memory to be searched",
+                     """Usage: !data "string"
+
+    This command loads the string enclosed in matching quotation marks into
+    memory to be searched by the entered regex. Seperate lines can be
+    delimited by the escape character '\\n'. Subsequent calls to this command
+    will overwrite the previous one."""),
+            "load": ("load a file into memory to be searched",
+                     """Usage: !load filename
+
+    Loads the specified file into memory so that it can be searched, seperate
+    lines in the file are loaded into memory as seperate line. Tilde expansion
+    is performed when loading the file."""),
+            "match": ("switch between match mode and search mode",
+                      """Usage: !match
+
+    Switches between search mode (default) and match mode. Match mode will
+    only match if the regex occurs at the beginning of the line whereas in
+    search mode the regex can match at any point in the line. In other words
+    match mode bahaves as if each regex pattern begins with the caret '^'
+    character."""),
+            "parse": ("read regex from a file",
+                      """Usage: !parse filename
+
+    Matches the regex in the specified file to the loaded text. The regex in
+    the file can be written verbosely. Tilde expansion is performed when
+    searching for the file."""),
+            "prompt": ("change the prompt",
+                       """Usage: !prompt [string]
+
+    Sets the prompt to the specified string (default is '> '). If no string is
+    given, no prompt is used."""),
+            "rep": ("mimic search and replace style regex",
+                    """Usage: !rep expression
+
+    Replaces matched regex with another string. The expression should be of the
+    form /exp/rep/ where / is any character. The first section exp is the regex
+    to match and the second section rep is the string to replace it with.""")
+        }
+
     def load_input_file(self, infile_name):
         # could this cause problems for windows users?
         if infile_name[0:2] == '~/':
@@ -127,7 +174,7 @@ class Regetron:
         if command == "data":
             self.set_data(args)
         elif command == "help":
-            print("Commands: !data !load !match !parse !prompt !rep")
+            self.print_help(args)
         elif command == "load":
             self.load_input_file(args)
         elif command == "match":
@@ -143,7 +190,9 @@ class Regetron:
         elif command == "rep":
             self.replace_regex(args)
         else:
-            print("Invalid command, see !help for valid commands")
+            raise ArtificialException(
+                "invalid command, see !help for valid commands"
+            )
 
     def set_data(self, args):
         self.infile_name = None
@@ -162,6 +211,19 @@ class Regetron:
             raise ArtificialException(
                 "Data must be enclosed in matching quotation marks."
             )
+
+    def print_help(self, cmd):
+        if not cmd:
+            print("Available commands are:")
+            for k, v in self.commands.items():
+                print("\t{0:10} - {1}".format(k, v[0]))
+        else:
+            try:
+                print("{0}".format(self.commands[cmd][1]))
+            except KeyError:
+                raise ArtificialException(
+                    "{0} is not a valid command".format(cmd)
+                )
 
     def replace_regex(self, args):
         bound_char = args[0]
